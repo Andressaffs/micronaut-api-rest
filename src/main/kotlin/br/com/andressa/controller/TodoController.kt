@@ -4,15 +4,19 @@ import br.com.andressa.model.Todo
 import br.com.andressa.repository.TodoRepository
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.*
-import javax.inject.Inject
-import javax.validation.Valid
+
 
 @Controller ("/todos")
 class TodoController(private val todoRepository: TodoRepository) {
 
     @Get
-    fun getTodos(): List<Todo> {
-        return todoRepository.findAll()
+    fun getTodos(): HttpResponse<List<Todo>> {
+        return HttpResponse.ok(todoRepository.findAll())
+    }
+
+    @Get ("/{id}")
+    fun getByIdTodo(@PathVariable("id") id: Long): HttpResponse<Todo> {
+        return HttpResponse.ok(todoRepository.findById(id).orElse(null))
     }
 
     @Post
