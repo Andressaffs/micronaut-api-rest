@@ -1,10 +1,10 @@
 package br.com.andressa.controller
 
 import br.com.andressa.model.Todo
-import br.com.andressa.repository.TodoRepository
 import br.com.andressa.service.TodoService
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.*
+import java.util.*
 
 
 @Controller ("/todos")
@@ -16,7 +16,7 @@ class TodoController(private val todoService: TodoService) {
     }
 
     @Get ("/{id}")
-    fun getByIdTodo(@PathVariable("id") id: Long): HttpResponse<Todo> {
+    fun getByIdTodo(@PathVariable("id") id: UUID): HttpResponse<Todo> {
         return HttpResponse.ok(this.todoService.getByIdTodo(id))
     }
 
@@ -26,13 +26,13 @@ class TodoController(private val todoService: TodoService) {
     }
 
     @Put ("/{id}")
-    fun updateTodo(@PathVariable("id") id: Long, todo: Todo): HttpResponse<Todo> {
+    fun updateTodo(@PathVariable("id") id: UUID, todo: Todo): HttpResponse<Todo> {
         todoService.updateTodo(id,todo)
         return HttpResponse.ok(todo)
     }
 
     @Delete ("/{id}")
-    fun deleteTodo (@PathVariable("id") id: Long): HttpResponse<Todo> {
+    fun deleteTodo (@PathVariable("id") id: UUID): HttpResponse<Todo> {
         todoService.deleteTodo(id)
         return HttpResponse.noContent()
     }

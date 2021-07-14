@@ -1,15 +1,22 @@
 micronaut:
   application:
     name: zup
-datasources:
-  default:
-    url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
-    driverClassName: org.h2.Driver
-    username: sa
-    password: ''
-    schema-generate: CREATE_DROP
-    dialect: H2
-jpa.default.properties.hibernate.hbm2ddl.auto: update
+  server:
+    cors:
+      enabled: true
+    port: 8082
 endpoints:
   health:
     enabled: true
+cassandra:
+  default:
+    advanced:
+      metadata:
+        schema:
+          enabled: false
+    basic:
+      contact-points:
+        - "127.17.0.2:9042"
+      port: 9042
+      load-balancing-policy:
+        local-datacenter: datacenter1
